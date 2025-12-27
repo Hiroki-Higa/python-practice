@@ -1,0 +1,12 @@
+users = [
+    {"name":"Taro","age":20},
+    {"name":"Hanako","age":16},
+    {"name":"Jiro","age":30},
+]
+
+for user in users:
+    if user ["age"]>=18:
+       print(f'{user["name"]}は成人です')
+    else:
+       print(f'{user["name"]}は未成年です')
+

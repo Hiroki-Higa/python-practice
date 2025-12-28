@@ -1,12 +1,19 @@
 users = [
-    {"name":"Taro","age":20},
-    {"name":"Hanako","age":16},
-    {"name":"Jiro","age":30},
+    {"name":"Taro","age":18},
+    {"name":"Hanako","age":30},
+    {"name":"Jiro","age":70},
 ]
 
+def get_member_type(age):
+   if age < 20:
+         return "child"
+   elif age < 65:
+         return "adult"
+   else:
+       return "senior"
+
 for user in users:
-    if user ["age"]>=18:
-       print(f'{user["name"]}は成人です')
-    else:
-       print(f'{user["name"]}は未成年です')
+    member_type = get_member_type(user["age"])
+    print(f'{user["name"]}: {member_type}')
+      
 

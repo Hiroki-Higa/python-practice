@@ -150,3 +150,29 @@ Pythonの基本データ構造を学習。
 ## Day12
 - 入力チェックを追加
 - try/except による例外処理
+
+# Day13: FastAPIでユーザー管理APIを作成
+
+## 学習内容
+- FastAPIの基本構造を理解
+- Webアプリケーションの起動方法（uvicorn）
+- APIエンドポイント（GET / POST）の作成
+- Swagger UI（/docs）を使ったAPI操作
+- CLIアプリとWebアプリの違いを理解
+
+## 作成したもの
+### ユーザー管理API
+- ユーザー追加（名前・年齢）
+- ユーザー検索
+- FastAPI + uvicorn を使用
+- Swagger UIからリクエストを送信可能
+
+## 使用技術
+- Python
+- FastAPI
+- uvicorn
+
+## 実行方法
+```bash
+cd day13
+python -m uvicorn main:app --reload

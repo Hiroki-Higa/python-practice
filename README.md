@@ -176,3 +176,26 @@ Pythonの基本データ構造を学習。
 ```bash
 cd day13
 python -m uvicorn main:app --reload
+
+# Day14: FastAPIでAPI設計を理解する
+
+## 学習内容
+- FastAPIを使ったAPI設計の基礎
+- GET / POST の役割の違い
+- Path Parameter の使い方
+- Pydantic（BaseModel）によるデータバリデーション
+- Swagger UI（/docs）でのAPI操作
+
+## 作成したもの
+### ユーザー管理API（設計改善版）
+- ユーザー追加（POST /users）
+- ユーザー一覧取得（GET /users）
+- ユーザー検索（GET /users/{name}）
+- 入力値はPydanticで自動バリデーション
+
+## フォルダ構成
+```text
+day14/
+├── main.py
+├── user_manager.py
+└── models.py

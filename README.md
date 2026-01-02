@@ -199,3 +199,30 @@ day14/
 ├── main.py
 ├── user_manager.py
 └── models.py
+
+# Day15: FastAPI User Manager（永続化対応）
+
+## 概要
+
+FastAPI を使ったシンプルなユーザー管理 API です。  
+ユーザーの「名前」と「年齢」を登録・取得でき、データは JSON ファイルに保存されます。
+
+Day15 では以下を実装しています。
+
+- FastAPI による Web API
+- ユーザー情報の JSON ファイル永続化
+- パスパラメータを使ったユーザー取得
+
+---
+
+## 使用技術
+
+- Python 3.14
+- FastAPI
+- Uvicorn
+- JSON（簡易データ保存）
+
+---
+
+## フォルダ構成
+

@@ -226,3 +226,118 @@ Day15 では以下を実装しています。
 
 ## フォルダ構成
 
+# FastAPI User Management API（Day15〜Day18）
+
+## 概要
+FastAPI を使ってユーザー管理API（CRUD）を段階的に実装する学習プロジェクト。  
+Day15〜Day18では、**API設計・バリデーション・レスポンス定義・エラー設計**を通して  
+「実務で通用する最小構成」を目標とする。
+
+---
+
+## 使用技術
+- Python 3.14
+- FastAPI
+- Uvicorn
+- Pydantic
+
+---
+
+## ディレクトリ構成（例）
+
+
+---
+
+## Day15：基本CRUDの実装
+
+### 目標
+- FastAPI の基本的な CRUD を理解する
+- JSON ファイルを使った簡易データ永続化
+
+### 実装内容
+- POST /users
+- GET /users/{name}
+- ユーザー情報を data.json に保存
+- UserManager クラスによるロジック分離
+
+### 学び
+- FastAPI のルーティング
+- uvicorn の起動方法
+- モジュール分割の基本
+
+---
+
+## Day16：PUT / DELETE の追加
+
+### 目標
+- REST API として CRUD を完成させる
+
+### 実装内容
+- PUT /users/{name}
+- DELETE /users/{name}
+- HTTPException による 404 エラー制御
+
+### 学び
+- HTTPメソッドの役割
+- status_code の意味
+- docs（Swagger）でAPIを確認する流れ
+
+---
+
+## Day17：レスポンス設計とバリデーション
+
+### 目標
+- 「docs を見れば仕様が分かるAPI」を作る
+
+### 実装内容
+- response_model の導入
+- User / UserResponse の分離
+- バリデーション（age >= 0）
+- 422 Validation Error の理解
+
+### 主なステータスコード
+| Code | 意味 |
+|----|----|
+| 201 | 作成成功 |
+| 200 | 取得・更新成功 |
+| 204 | 削除成功（レスポンスなし） |
+| 404 | ユーザー未存在 |
+| 422 | バリデーションエラー |
+
+### 学び
+- Pydantic が自動で422を返す仕組み
+- Response Schema の役割
+- FastAPIが仕様書を生成する理由
+
+---
+
+## Day18：実務視点での整理
+
+### 目標
+- 「動く」から「説明できる」APIへ
+
+### 実装内容
+- 責務分離の明確化
+  - main.py：API層
+  - models.py：データ定義
+  - user_manager.py：ビジネスロジック
+- README に仕様を明文化
+
+### 学び
+- 実務では「コード＋説明」がセット
+- APIはドキュメントが本体
+- 小さくても設計を意識する重要性
+
+---
+
+## エンドポイント一覧
+
+### POST /users
+ユーザー作成
+
+**Request Body**
+```json
+{
+  "name": "Taro",
+  "age": 30
+}

@@ -341,3 +341,118 @@ Day15〜Day18では、**API設計・バリデーション・レスポンス定�
   "name": "Taro",
   "age": 30
 }
+
+
+認証・認可設計（Authentication / Authorization）
+
+本プロジェクトでは JWT + FastAPI Dependencies を用いて
+認証（Authentication） と 認可（Authorization） を明確に分離して設計している。
+
+1. 設計方針
+認証と認可を分ける理由
+
+認証（401 Unauthorized）
+
+「誰か」を判定する
+
+トークンが有効か
+
+ユーザーが存在するか
+
+認可（403 Forbidden）
+
+「何ができるか」を判定する
+
+管理者権限を持つか
+
+これを分離することで、
+
+エラーハンドリングが明確になる
+
+ルータの責務がシンプルになる
+
+将来的な拡張（role制御）が容易になる
+
+2. 認証：get_current_user
+def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db),
+):
+
+役割
+
+Authorization ヘッダから JWT を取得
+
+JWT を検証（署名・期限）
+
+token 内の sub（username）からユーザーを取得
+
+認証に失敗した場合は 401 Unauthorized
+
+責務として「やらないこと」
+
+管理者かどうかは判断しない
+
+ビジネスロジックは持たない
+
+👉 「ログイン済みユーザーとは何か」だけを定義
+
+3. 認可：require_admin
+def require_admin(
+    user: User = Depends(get_current_user),
+):
+
+役割
+
+get_current_user を前提とする
+
+user.is_admin をチェック
+
+権限不足の場合は 403 Forbidden
+
+なぜ分けたか
+
+認証が通っていない場合は 401
+
+認証済みだが権限がない場合は 403
+
+HTTPステータスの意味を正しく表現するため。
+
+4. ルータ設計
+管理者専用エンドポイント
+@router.get("/admin/users")
+def list_users(
+    admin = Depends(require_admin),
+):
+
+
+ルータ側では「管理者であること」を意識しない
+
+依存関係にすべてを委譲
+
+👉 ルータ = 業務処理だけを書く
+
+5. テストによる設計保証
+
+pytest により以下を保証している：
+
+未ログイン → 401
+
+一般ユーザーで admin API → 403
+
+管理者 → 200
+
+/me はログインユーザーのみアクセス可能
+
+テストは仕様書として機能しており、
+認証・認可の振る舞いを壊さない安全網になっている。
+
+6. 今後の拡張想定
+
+is_admin → role: admin / editor / user
+
+require_role("admin") のような汎用認可
+
+Scope / Permission ベース認可
+
+現在の設計はそれらを無理なく追加できる構造になっている。
